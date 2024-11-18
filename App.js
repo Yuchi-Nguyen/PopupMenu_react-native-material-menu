@@ -1,58 +1,71 @@
-import * as React from 'react';
-import { View, StyleSheet, Platform, StatusBar } from 'react-native';
-import { Button, Snackbar, Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
+import React, { useState } from 'react';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  StyleSheet,
+  TouchableHighlight,
+} from 'react-native';
+import Tooltip from 'react-native-walkthrough-tooltip';
 
-const lightTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: '#6200ee', 
-    background: '#ffffff', 
-    text: '#000000',
-    surface: '#ffffff',
-  },
-};
-
-const MyComponent = () => {
-  const [visible, setVisible] = React.useState(false);
-
-  const onToggleSnackBar = () => setVisible(!visible);
-
-  const onDismissSnackBar = () => setVisible(false);
+const App = () => {
+  const [toolTipVisible, setToolTipVisible] = useState(false);
 
   return (
-    <PaperProvider theme={lightTheme}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.container}>
-        <Button onPress={onToggleSnackBar}>{visible ? 'Hide' : 'Show'}</Button>
-        <Snackbar
-          visible={visible}
-          onDismiss={onDismissSnackBar}
-          action={{
-            label: 'Undo',
-            onPress: () => {
-              // Xử lý hành động Undo
-            },
-          }}
-          style={styles.snackbar} // Tùy chỉnh Snackbar
+        <Text style={styles.titleStyle}>
+          Example of Tooltip in React Native for Android and IOS
+        </Text>
+        <Tooltip
+          animated={true}
+          arrowSize={{ width: 16, height: 8 }}
+          backgroundColor="rgba(0,0,0,0.5)"
+          isVisible={toolTipVisible}
+          content={<Text>Hello! AboutReact</Text>}
+          placement="bottom"
+          onClose={() => setToolTipVisible(false)}
         >
-          Hey there! I'm a Snackbar.
-        </Snackbar>
+          <TouchableHighlight
+            style={styles.buttonStyle}
+            onPress={() => setToolTipVisible(true)}
+          >
+            <Text style={styles.buttonTextStyle}>
+              Say Hi to AboutReact
+            </Text>
+          </TouchableHighlight>
+        </Tooltip>
       </View>
-    </PaperProvider>
+    </SafeAreaView>
   );
 };
+export default App;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ffffff', 
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    alignContent: 'center',
+    textAlign: 'center',
+    paddingTop: 30,
+    backgroundColor: '#307ecc',
+    padding: 16,
   },
-  snackbar: {
-    marginBottom: Platform.OS === 'ios' ? 20 : 10, 
+  buttonStyle: {
+    width: '100%',
+    height: 40,
+    padding: 10,
+    backgroundColor: '#f5821f',
+    marginTop: 30,
+  },
+  buttonTextStyle: {
+    color: 'white',
+    textAlign: 'center',
+  },
+  titleStyle: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 20,
+    marginTop: 10,
   },
 });
-
-export default MyComponent;
