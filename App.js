@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // Combine the imports into one line
+import React, { useState } from 'react'; 
 import { View, Text } from 'react-native';
 import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
 
